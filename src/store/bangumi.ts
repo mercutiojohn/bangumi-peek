@@ -8,6 +8,7 @@ import {
   WeekDay,
   BangumiType
 } from '../types/bangumi';
+import BangumiAPI from '@/services/bangumi';
 
 // Default layout configuration
 const DEFAULT_LAYOUT: LayoutConfig = {
@@ -96,14 +97,17 @@ const actions = {
     
     try {
       // This is a placeholder - in a real implementation, you would fetch from an API
-      const response = await fetch(`/api/bangumi/${season}`);
-      const data: Data = await response.json();
+      // const response = await fetch(`/api/bangumi/${season}`);
+      // const data: Data = await response.json();
+      const data = await BangumiAPI.getMockData(season);
       
       state.data = data;
       state.currentSeason = season;
       state.lastUpdated = new Date();
     } catch (error) {
       state.error = `Failed to fetch bangumi data: ${error instanceof Error ? error.message : String(error)}`;
+      console.error('Error fetching bangumi data:', error);
+      state.data = BangumiAPI.getMockData(season); // Fallback to mock data
     } finally {
       state.isLoading = false;
     }
@@ -222,12 +226,31 @@ export const bangumiStore = {
   state
 };
 
+// Create a snapshot of favorites for change detection
+let previousFavorites: string[] = [];
+
 // Persist favorites to localStorage
-subscribe(state.favorites, () => {
-  try {
-    localStorage.setItem('bangumi-favorites', JSON.stringify([...state.favorites]));
-  } catch (e) {
-    console.error('Failed to save favorites to localStorage', e);
+subscribe(state, (ops) => {
+  // Only update localStorage when favorites change
+  if (ops.some(op => op[1].includes('favorites'))) {
+    try {
+      if (state.favorites) {
+        // Convert Set to Array for JSON serialization
+        const currentFavorites = Array.from(state.favorites);
+        
+        // Check if favorites have actually changed
+        const favoritesChanged = 
+          currentFavorites.length !== previousFavorites.length || 
+          currentFavorites.some(id => !previousFavorites.includes(id));
+        
+        if (favoritesChanged) {
+          localStorage.setItem('bangumi-favorites', JSON.stringify(currentFavorites));
+          previousFavorites = currentFavorites;
+        }
+      }
+    } catch (e) {
+      console.error('Failed to save favorites to localStorage:', e);
+    }
   }
 });
 
