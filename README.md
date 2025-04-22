@@ -1,54 +1,85 @@
-# React + TypeScript + Vite
+# Bangumi Peek
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+一个现代化的 Bangumi 客户端应用，提供优雅的界面和流畅的使用体验。
 
-Currently, two official plugins are available:
+## ✨ 特性
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 🎨 多种布局方式
+  - 网格布局
+  - 海报墙布局
+  - 时间线布局
+- 🌗 亮色/暗色主题支持
+- 📱 响应式设计，支持移动端
+- ⚡ 快速响应的用户界面
+- 🎯 基于 Shadcn UI 的现代化组件
 
-## Expanding the ESLint configuration
+## 🛠️ 技术栈
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- React 19
+- TypeScript 5.7
+- Vite 6
+- TailwindCSS 4
+- Radix UI
+- Valtio (状态管理)
+- React Router 7
+- Framer Motion (动画效果)
+- Zod (数据验证)
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## 📦 安装
+
+确保你的开发环境满足以下要求：
+- Node.js 20.0+
+- pnpm 8.0+
+
+```bash
+# 克隆项目
+git clone https://github.com/mercutiojohn/bangumi-peek.git
+
+# 进入项目目录
+cd bangumi-peek
+
+# 安装依赖
+pnpm install
+
+# 启动开发服务器
+pnpm dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🚀 构建
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```bash
+# 构建生产版本
+pnpm build
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+# 预览生产构建
+pnpm preview
 ```
+
+## 📁 项目结构
+
+```
+src/
+├── assets/          # 静态资源
+├── components/      # React 组件
+│   ├── bangumi/    # Bangumi 相关组件
+│   ├── layouts/    # 布局组件
+│   └── ui/         # UI 基础组件
+├── hooks/          # 自定义 React Hooks
+├── lib/            # 工具函数库
+├── pages/          # 页面组件
+├── services/       # API 服务
+├── store/          # 状态管理
+└── types/          # TypeScript 类型定义
+```
+
+## 🔧 开发工具配置
+
+项目使用了以下工具来保证代码质量：
+
+- TypeScript - 类型检查
+- ESLint - 代码规范
+- Prettier - 代码格式化
+
+## 📝 License
+
+[MIT License](LICENSE)
